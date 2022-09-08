@@ -4,13 +4,13 @@
     const Produto = require("./produto")
     await database.sync();
 
-    /* const novoProduto = await Produto.create({
+    const novoProduto = await Produto.create({
         nome: "Rolo de LED",
         preco: 15,
         descricao: "contém todas cores RGB"
     })
 
-    console.log(novoProduto) */
+    console.log(novoProduto) 
 
     const produtos = await Produto.findByPk(2);
 
