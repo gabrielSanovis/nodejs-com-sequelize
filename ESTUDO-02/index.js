@@ -3,35 +3,39 @@
     const database = require("./db");
     const Produto = require("./models/produto")
     const Fabricante = require("./models/fabricante")
-    const Categoria =  require("./models/categoria")
+    const Categoria = require("./models/categoria")
     await database.sync();
 
-    /*const novoFabricante = await Fabricante.create({
+    const novoFabricante = await Fabricante.create({
         nome: "Xiaomi"
-    })
+    });
 
     const novoProduto = await Produto.create({
         nome: "POCO X3 PRO",
         preco: 1889,
         descricao: "Celular da Xiaomi",
         idFabricante: novoFabricante.id
-    })
+    });
 
-    console.log(novoProduto) 
+    const novaCategoria = await Categoria.create({
+        nome: "Perifericos"
+    });
 
-    const produtos = await Produto.findByPk(1, {include: Fabricante});*/
+    const produtos = await Produto.findByPk(1, { include: [Categoria, Fabricante] });
 
-    const fabricante = await Fabricante.findByPk(1, {include: Produto})
+    console.log(produtos);
+
+    const fabricante = await Fabricante.findByPk(1, { include: Produto });
 
     console.log(fabricante.produtos);
 
-    /*produtos.descricao = "Teclado não mecânico";
-    produtos.save(); 
+    produtos.descricao = "Teclado não mecânico";
+    produtos.save();
 
     await Produto.destroy({
         where: {
             preco: 15
         }
-    })*/
+    })
 
 })();

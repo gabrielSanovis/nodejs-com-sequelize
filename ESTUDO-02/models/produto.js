@@ -1,8 +1,8 @@
 const Sequelize = require("sequelize");
 const database = require("../db");
 const Fabricante = require("./fabricante");
-const Categoria = require("./categoria")
-const CategoriaProduto = require("./categoriaProduto")
+const Categoria = require("./categoria");
+const CategoriaProduto = require("./categoriaProduto");
 
 const Produto = database.define("produto", {
     id: {
@@ -21,16 +21,16 @@ const Produto = database.define("produto", {
     descricao: {
         type: Sequelize.STRING
     }
-})
+});
 
 Produto.belongsTo(Fabricante, {
     constraint: true,
     foreignKey: "idFabricante"
-})
+});
 
 Fabricante.hasMany(Produto, {
     foreignKey: "idFabricante"
-})
+});
 
 Produto.belongsToMany(Categoria, {
     through: {
@@ -38,7 +38,7 @@ Produto.belongsToMany(Categoria, {
     },
     constraint: true,
     foreignKey: "idProduto"
-})
+});
 
 Categoria.belongsToMany(Produto, {
     through: {
@@ -46,7 +46,11 @@ Categoria.belongsToMany(Produto, {
     },
     constraint: true,
     foreignKey: "idCategoria"
-})
+});
 
+Produto.hasMany(CategoriaProduto, { foreignKey: "idProduto" });
+CategoriaProduto.belongsTo(Produto, { foreignKey: "idProduto" });
+Categoria.hasMany(CategoriaProduto, { foreignKey: "idCategoria" });
+CategoriaProduto.belongsTo(Categoria, { foreignKey: "idCategoria" });
 
 module.exports = Produto;
